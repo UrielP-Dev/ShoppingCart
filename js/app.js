@@ -2,6 +2,7 @@ const cart = document.querySelector('#cart');
 const table = document.querySelector('#lista-carrito tbody');
 const dropCart = document.querySelector('#vaciar-carrito');
 const cursesLister = document.querySelector('#lista-cursos');
+
 let articulosCarrito = []
 
 cursesLister.addEventListener('click', addCursor);
@@ -9,9 +10,8 @@ cursesLister.addEventListener('click', addCursor);
 function addCursor(e) {
     const selected = e.target.parentElement.parentElement
     console.log(e.target.classList)
-    ReadData(selected)
-    e.contains('agregar-carrito') ?
-    console.log(selected) : 
+    e.target.classList.contains('agregar-carrito') ?
+    ReadData(selected) : 
     console.log('Dont is cart')
 }  
 
@@ -25,18 +25,25 @@ function ReadData(selected) {
         price: selected.querySelector('.precio span').textContent,
         amount: 1
     }
-    if(articulosCarrito.length.some(selected)){
-        curso.amount += 1
-    }else{
-        articulosCarrito = [...articulosCarrito,info]
-        console.log(articulosCarrito)
+        console.log(info)
+        if (articulosCarrito.some(articulosCarrito => articulosCarrito.id === info.id)){
+           articulosCarrito = articulosCarrito.map(curso => {
+            if(curso.id === info.id){
+                curso.amount++
+            }
+            return curso
+           })
+        }else{
+            articulosCarrito = [...articulosCarrito, info]
+            console.log(articulosCarrito)
+        }
+        
         cartHtml()
-    }
    
 }
 
 function cartHtml() {
-    
+    table.innerHTML = '';
     articulosCarrito.forEach(curso => {
         const row = document.createElement('tr')
         row.innerHTML =  `
@@ -44,10 +51,35 @@ function cartHtml() {
         <td>${curso.title}</td>
         <td>${curso.price}</td>
         <td>${curso.amount}</td>
+        <td class = 'delete'> <img width = "30px"  src="img/Trash.gif"/> </td>
         `
         table.appendChild(row)
-
-
+        const deleteOne = row.querySelector('.delete')
+        console.log(deleteOne)
+        deleteOne.addEventListener('click', () => deleteOneItem(curso));
+        
     });
-
 }
+
+    function deleteOneItem(Deletecurso){
+        console.log('click')
+        console.log(Deletecurso)
+        if (articulosCarrito.some(articulosCarrito => articulosCarrito.id === Deletecurso.id)){
+            articulosCarrito = articulosCarrito.map(curso => {
+             if(curso.id === Deletecurso.id){
+                if (curso.amount > 1) {
+                    curso.amount--; 
+                } else {
+                    return null; 
+                }
+
+             }
+             return curso
+            }).filter(curso => curso !== null); 
+            
+         }
+         cartHtml()
+    }
+
+    
+
