@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Carrito</title>
+    <title>Carrito</title> 
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/skeleton.css">
     <link rel="stylesheet" href="css/custom.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.5/lottie.min.js"></script>
 </head>
 
 <body>
@@ -40,6 +41,17 @@
                                             <td>Nombre</td>
                                             <td>Precio</td>
                                             <td>Cantidad</td>
+                                            <div id="animacion-lottie" style="width: 300px; height: 300px;"></div>
+
+    <script>
+        var animacion = lottie.loadAnimation({
+            container: document.getElementById('animacion-lottie'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'img/animate.json' // Asegúrate de que esta ruta sea correcta
+        });
+    </script>
                                             <td></td>
                                         </tr>
                                     </tbody>

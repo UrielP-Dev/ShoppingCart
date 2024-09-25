@@ -2,10 +2,12 @@ const cart = document.querySelector('#cart');
 const table = document.querySelector('#lista-carrito tbody');
 const dropCart = document.querySelector('#vaciar-carrito');
 const cursesLister = document.querySelector('#lista-cursos');
+const deleteALl = document.querySelector('#vaciar-carrito')
 
 let articulosCarrito = []
 
 cursesLister.addEventListener('click', addCursor);
+deleteALl.addEventListener('click', DeleteAll)
 
 function addCursor(e) {
     const selected = e.target.parentElement.parentElement
@@ -79,7 +81,15 @@ function cartHtml() {
             
          }
          cartHtml()
-    }
+        }
 
+function DeleteAll(){
     
+    articulosCarrito = []
+    table.innerHTML = ''
+    
+    
+}   
+
+
 
